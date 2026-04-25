@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Shop</title>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+    }
+
+    header {
+      padding: 16px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .card {
+      background: #1e293b;
+      margin: 10px;
+      padding: 12px;
+      border-radius: 12px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #22c55e;
+      color: white;
+      margin-top: 8px;
+      cursor: pointer;
+    }
+
+    .cart {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #000;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>🛍 Mini Market</header>
+
+<div id="products"></div>
+
+<div class="cart">
+  <div id="total">0 ₽</div>
+  <button onclick="checkout()">Заказать</button>
+</div>
+
+<script>
+const tg = window.Telegram.WebApp;
+tg.expand();
+
+const products = [
+  { id: 1, name: "AirPods", price: 9990 },
+  { id: 2, name: "iPhone 15", price: 79990 },
+  { id: 3, name: "MacBook", price: 129990 },
+  { id: 4, name: "Apple Watch", price: 29990 }
+];
+
+let cart = [];
+
+const container = document.getElementById("products");
+
+products.forEach(p => {
+  const div = document.createElement("div");
+  div.className = "card";
+  div.innerHTML = `
+    <h3>${p.name}</h3>
+    <p>${p.price} ₽</p>
+    <button onclick="add(${p.id})">В корзину</button>
+  `;
+  container.appendChild(div);
+});
+
+function add(id) {
+  const item = products.find(p => p.id === id);
+  cart.push(item);
+  updateTotal();
+}
+
+function updateTotal() {
+  const total = cart.reduce((s, p) => s + p.price, 0);
+  document.getElementById("total").innerText = total + " ₽";
+}
+
+function checkout() {
+  tg.sendData(JSON.stringify(cart));
+}
+</script>
+
+</body>
+</html>

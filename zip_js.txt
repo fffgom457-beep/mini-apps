@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
+}
+
+header {
+  padding: 16px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.card {
+  background: #1e293b;
+  margin: 10px;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #22c55e;
+  color: white;
+}
+
+.cart {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: black;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
